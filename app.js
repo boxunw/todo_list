@@ -1,30 +1,32 @@
 const express = require('express')
-const mongoose = require('mongoose')
+// const mongoose = require('mongoose')
 const exphbs = require('express-handlebars');
 // const Todo = require('./models/todo') // 載入 Todo model
 const methodOverride = require('method-override') // 載入 method-override
-const routes = require('./routes') // 引用路由器
 
-// 加入這段 code, 僅在非正式環境時, 使用 dotenv
-if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').config()
-}
+const routes = require('./routes') // 引用路由器
+require('./config/mongoose')
+
+// // 加入這段 code, 僅在非正式環境時, 使用 dotenv
+// if (process.env.NODE_ENV !== 'production') {
+//   require('dotenv').config()
+// }
 
 const app = express()
 
-// 設定連線到 mongoDB
-mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+// // 設定連線到 mongoDB
+// mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
 
-// 取得資料庫連線狀態
-const db = mongoose.connection
-// 連線異常
-db.on('error', () => {
-  console.log('mongodb error!')
-})
-// 連線成功
-db.once('open', () => {
-  console.log('mongodb connected!')
-})
+// // 取得資料庫連線狀態
+// const db = mongoose.connection
+// // 連線異常
+// db.on('error', () => {
+//   console.log('mongodb error!')
+// })
+// // 連線成功
+// db.once('open', () => {
+//   console.log('mongodb connected!')
+// })
 
 // 啟用樣板引擎
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
