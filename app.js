@@ -1,4 +1,5 @@
 const express = require('express')
+const session = require('express-session')
 const exphbs = require('express-handlebars');
 const methodOverride = require('method-override') // 載入 method-override
 
@@ -10,6 +11,13 @@ const app = express()
 // 啟用樣板引擎
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
+
+// 啟用並設定 express-session
+app.use(session({
+  secret: 'ThisIsMySecret',
+  resave: false,
+  saveUninitialized: true
+}))
 
 // 用 app.use 規定每一筆請求都需要透過 body-parser 進行前置處理
 app.use(express.urlencoded({ extended: true }))
