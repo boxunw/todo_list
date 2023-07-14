@@ -1,7 +1,8 @@
 const express = require('express')
 const session = require('express-session')
 const exphbs = require('express-handlebars');
-const methodOverride = require('method-override') // 載入 method-override
+const methodOverride = require('method-override')
+const flash = require('connect-flash')
 
 const routes = require('./routes') // 引用路由器
 const usePassport = require('./config/passport') // 載入 Passport 設定檔
@@ -29,10 +30,15 @@ app.use(methodOverride('_method'))
 // 呼叫 Passport 函式並傳入 app，這條要寫在路由之前
 usePassport(app)
 
+// 掛載 connect-flash
+app.use(flash())
+
 // 設定本地變數 res.locals
 app.use((req, res, next) => {
   res.locals.isAuthenticated = req.isAuthenticated()
   res.locals.user = req.user
+  res.locals.success_msg = req.flash('success_msg')
+  res.locals.warning_msg = req.flash('warning_msg')
   next()
 })
 
