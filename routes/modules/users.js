@@ -1,10 +1,8 @@
 const express = require('express')
-const bcrypt = require('bcryptjs')
 const router = express.Router()
-
 // 引用 passport
 const passport = require('passport')
-
+const bcrypt = require('bcryptjs')
 const User = require('../../models/user')
 
 // 使用者認證路由
