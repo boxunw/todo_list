@@ -3,6 +3,9 @@ const session = require('express-session')
 const exphbs = require('express-handlebars');
 const methodOverride = require('method-override')
 const flash = require('connect-flash')
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
 
 const routes = require('./routes') // 引用路由器
 const usePassport = require('./config/passport') // 載入 Passport 設定檔
@@ -16,7 +19,7 @@ app.set('view engine', 'handlebars')
 
 // 啟用並設定 express-session
 app.use(session({
-  secret: 'ThisIsMySecret',
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: true
 }))
@@ -46,7 +49,7 @@ app.use((req, res, next) => {
 // 將 request 導入路由器
 app.use(routes)
 
-// 設定 port 3000
-app.listen(3000, () => {
+// 設定 port
+app.listen(process.env.PORT, () => {
   console.log('App is running on http://localhost:3000')
 })
