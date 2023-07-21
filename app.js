@@ -6,6 +6,7 @@ const flash = require('connect-flash')
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
+const PORT = process.env.PORT
 
 const routes = require('./routes') // 引用路由器
 const usePassport = require('./config/passport') // 載入 Passport 設定檔
@@ -49,7 +50,7 @@ app.use((req, res, next) => {
 // 將 request 導入路由器
 app.use(routes)
 
-// 設定 port
-app.listen(process.env.PORT, () => {
-  console.log('App is running on http://localhost:3000')
+// 啟動並監聽伺服器
+app.listen(PORT, () => {
+  console.log('App is running on http://localhost:${PORT}')
 })
