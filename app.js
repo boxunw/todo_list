@@ -52,5 +52,5 @@ app.use(routes)
 
 // 啟動並監聽伺服器
 app.listen(PORT, () => {
-  console.log('App is running on http://localhost:${PORT}')
+  console.log(`App is running on http://localhost:${PORT}`)
 })
